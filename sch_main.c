@@ -26,7 +26,7 @@ void scheduler_main(void)
 	static uint8_t ovrld_task_id;
 	#endif
 	
-	if(get_system_tick()> last_tick)
+	if(get_system_tick() != last_tick)
 	{
 		tick_delta = get_system_tick() - last_tick;
 		last_tick = get_system_tick();
