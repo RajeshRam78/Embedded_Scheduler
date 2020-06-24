@@ -51,7 +51,10 @@ void scheduler_main(void)
 			task[task_id].task_tick += tick_delta;
 			if(task[task_id].task_tick >= task[task_id].periodicity)
 			{
-				task[task_id].fptr();
+				if(task[taskid].fptr != 0)
+				{
+				    task[task_id].fptr();
+				}
 				task[task_id].task_tick = 0U;
 				
 			}
