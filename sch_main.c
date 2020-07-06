@@ -23,7 +23,7 @@ void scheduler_main(void)
 	uint8_t task_id;
 	
 	#ifdef DEBUG
-	static uint8_t ovrld_task_id;
+	static uint8_t ovrld_task_id = TOTAL_TASKS;
 	#endif
 	
 	if(get_system_tick() != last_tick)
@@ -31,31 +31,34 @@ void scheduler_main(void)
 		tick_delta = get_system_tick() - last_tick;
 		last_tick = get_system_tick();
 	
-	
-		if(1U < tick_delta)
-		{
-			/* IMPORTANT : 
-			schedular over loaded for the current configuration*/
-			/* Handle the load here OR reconfigure the task list*/
-			#ifdef DEBUG
-			ovrld_task_id = 0;
-			#endif
-		}
-		
 		/* Iterate through tasks */
 		for(task_id = 0U; task_id < TOTAL_TASKS; task_id++)
 		{
-			#ifdef DEBUG
-				ovrld_task_id = task_id;
-			#endif
 			task[task_id].task_tick += tick_delta;
 			if(task[task_id].task_tick >= task[task_id].periodicity)
 			{
+				#ifdef DEBUG
+				if(task[task_id].task_tick != task[task_id].periodicity)
+				{
+					/* task of task_id delayed in execution by time = task_tick - periodicity mS */
+					/* At this point the ovrld_task_id holds the id of the task which may have caused delay in execution */
+					/* put a break point at the start of this condition to check the overloaded task id */
+					/* reloading the variable to enable the check in next loop */
+					ovrld_task_id = TOTAL_TASKS;
+				}
+				#endif
 				if(task[taskid].fptr != 0)
 				{
 				    task[task_id].fptr();
 				}
 				task[task_id].task_tick = 0U;
+				
+				#ifdef DEBUG
+				if((get_system_tick() != last_tick) && (ovrld_task_id == TOTAL_TASKS))
+				{
+				    ovrld_task_id = task_id;
+				}
+				#endif
 				
 			}
 		}
