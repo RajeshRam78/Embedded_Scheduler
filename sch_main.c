@@ -47,7 +47,7 @@ void scheduler_main(void)
 					ovrld_task_id = TOTAL_TASKS;
 				}
 				#endif
-				if(task[taskid].fptr != 0)
+				if(task[task_id].fptr != 0)
 				{
 				    task[task_id].fptr();
 				}
