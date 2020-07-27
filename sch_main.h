@@ -8,5 +8,5 @@
 extern void increment_tick(void);
 extern void scheduler_main(void);
 extern uint32_t get_system_tick(void);
-
+extern void wait_ms(uint32_t ms_count);
 #endif

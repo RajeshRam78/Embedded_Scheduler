@@ -16,6 +16,16 @@ uint32_t get_system_tick(void)
 	return system_tick;
 }
 
+
+void wait_ms(uint32_t ms_count)
+{
+	uint32_t tick_now = get_system_tick();
+	while((get_system_tick() - tick_now) < ms_count)
+	{
+	}
+}
+
+
 void scheduler_main(void)
 {
 	static uint32_t last_tick;
