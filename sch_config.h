@@ -12,4 +12,12 @@
 
 extern task_t task[TOTAL_TASKS];
 
+enum etask_ID
+{
+	TSKID_0,
+	TSKID_1,
+	TSKID_2
+};
+
+
 #endif

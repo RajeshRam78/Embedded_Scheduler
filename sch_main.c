@@ -25,6 +25,10 @@ void wait_ms(uint32_t ms_count)
 	}
 }
 
+void sch_tsk_qck_call(enum etask_ID tsk_ID)
+{
+	task[tsk_ID].task_tick = task[tsk_ID].periodicity;
+}
 
 void scheduler_main(void)
 {
